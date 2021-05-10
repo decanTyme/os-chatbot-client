@@ -2,7 +2,6 @@ package main;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -11,14 +10,14 @@ import java.net.Socket;
 /**
  * Simple implementation of client-server communication for the client-side
  * interface. When run in the command line, it accepts two arguments,
- * {@code address} and {@code port}. When not supplied, it will default to
+ * {@code address} and {@code port}. When not specified, it will default to
  * {@code 127.0.0.1:6013}.
  * 
  * <p>
  * Example console execute: <blockquote>
  * 
  * <pre>
- * 	java -jar chatbot-client.jar 127.0.0.1 5500
+ * java -jar chatbot-client.jar 127.0.0.1 5500
  * </pre>
  * 
  * </blockquote>
@@ -26,14 +25,14 @@ import java.net.Socket;
  * Or subsequently without arguments: <blockquote>
  * 
  * <pre>
- * 	java -jar chatbot-client.jar
+ * java -jar chatbot-client.jar
  * </pre>
  * 
  * </blockquote>
  * <p>
  * 
  * @author Danry Ague
- * @version 2.3.6
+ * @version 2.3.7
  */
 public class Client {
 
@@ -75,45 +74,51 @@ public class Client {
 
 	/** Declarations **/
 	Socket sock = new Socket(uri, port);
-	InputStream in = sock.getInputStream();
-	BufferedReader bin = new BufferedReader(new InputStreamReader(in));
-	PrintWriter pout = new PrintWriter(sock.getOutputStream(), true);
+	BufferedReader received = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+	PrintWriter send = new PrintWriter(sock.getOutputStream(), true);
 	BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
 	String reply;
-	boolean flag = false;
 
 	/* Output current client instance URI and port when successfully connected */
-	stdStream.println(PREF_INF + "(Client running to " + uri + ":" + port + ")" + "\n");
+	stdStream.println(PREF_INF + "(Client connected to " + uri + ":" + port + ")" + "\n");
 
-	while ((reply = bin.readLine()) != null && !flag) {
+	while ((reply = received.readLine()) != null) {
 
 	    /* Initial handshake message from server */
 	    stdStream.println("Current time and date is " + reply + "\n");
 
-	    while (!flag) {
+	    while (!reply.equals("exit")) {
 
 		/* Send to server the user input */
 		stdStream.println("\n" + "Message: ");
 		String message = consoleReader.readLine();
-		pout.println(message);
+
+		/** Check if message is empty **/
+		if (!message.equals("")) {
+		    send.println(message);
+		} else {
+		    stdStream.println("Message cannot be empty!" + "\n");
+		    continue;
+		}
 
 		/* Received from server */
-		reply = bin.readLine();
+		reply = received.readLine();
 
 		/** Check if user wants to exit **/
-		if (message.equals("exit")) {
+		if (reply.equals("exit")) {
 		    stdStream.println("\n\n" + "Thank you for using AIChatbot! Exiting...");
-		    flag = true;
-		    sock.close();
 		} else {
 
 		    /* Otherwise, relay the server reply to user */
-		    stdStream.println("\n" + "> " + generateTimestamp() + " | Reply from Server: " + reply);
+		    stdStream.println("\n" + "> " + generateTimestamp() + " | Reply from server: " + reply);
 		}
 
 	    }
-
+	    break;
 	}
+
+	/** Properly close the connection **/
+	sock.close();
     }
 
     /**
@@ -132,25 +137,26 @@ public class Client {
      * @param args (optional) address and port
      */
     public static void main(String[] args) {
-	clearScreen();
+	clearScreen(); 
 
 	int port;
 	String address;
 
-	/** Makes sure there are console arguments **/
-	if (args != null) {
-	    port = Integer.parseInt(args[1]);
+	if (args.length != 0) {
 	    address = args[0];
+	    port = Integer.parseInt(args[1]);
 	} else {
 	    /** Defaults, if there no console arguments **/
-	    port = 6013;
 	    address = "127.0.0.1";
+	    port = 6013;
 	}
 
+	// TODO: Handle args and exceptions
 	try {
 	    connect(address, port);
 	} catch (IOException e) {
-//	    e.printStackTrace();
+	    stdStream.println(PREF_ERR + e.getMessage() + ".");
 	}
+	stdStream.close();
     }
 }
