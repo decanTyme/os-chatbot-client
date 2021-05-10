@@ -1,7 +1,7 @@
 OS Activity 3: Process Implementation, Client-Side Codebase
 =========================
 
-Simple implementation of client-server communication for the client-side interface. When run in the command line,<sup>[1](#1)</sup> it accepts two arguments, `address` and `port`. When not specified, it will default to `127.0.0.1:6013`. Runs indefinitely until the `exit` keyword is received back from the server.
+Simple implementation of client-server communication for the client-side interface. When run in the command line,<sup>[1](#fn-jarfile)</sup> it accepts two arguments, `address` and `port`. When not specified, it will default to `127.0.0.1:6013`. Runs indefinitely until the `exit` keyword is received back from the server.
 
 Example console execute: 
 
@@ -32,7 +32,7 @@ This is a simple Java 'client' that runs in the command line that can connect to
 ## Process Rundown
 When the program is first run, a handshake is made to confirm the connection to server in the form of the current date and time. If the server is not running or the address and/or port is not found, the program will refuse to run and an error message is displayed.
 
-The displayed time and date of the handshake is from the server itself and *not* from the client. It will also display the `address` and `port` of the server it is currently connected to. The sent user message will then be echoed back to the user and will also be displayed with a timestamp (this time it is from the client).
+The displayed time and date of the handshake is from the server itself and *not* from the client. It will also display the `address` and `port` of the server it is currently connected to. The sent user message <sup>[2](#fn-nl)</sup> will then be echoed back to the user and will also be displayed with a timestamp (this time it is from the client). The program will refuse to send a message that is empty.
 
 A successfully connected program output will more or less look like so:
 
@@ -56,4 +56,6 @@ The connection and, subsequently, the program will terminate if the user enters 
 - [ ] Finalize JavaDocs and README
 - [ ] Finalize all
 
-<a name="1">1</a>. You need to compile and export the code as a `jar` file first before you can execute it.
+<a name="fn-jarfile">1</a>. You need to compile and export the code as a `jar` file first before you can execute it.
+
+<a name="fn-nl">2</a>. Does not support multi-line messages.
