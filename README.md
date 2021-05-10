@@ -1,7 +1,7 @@
 OS Activity 3: Process Implementation, Client-Side Codebase
 =========================
 
-Simple implementation of client-server communication for the client-side interface. When run in the command line,[^1] it accepts two arguments, `address` and `port`. When not specified, it will default to `127.0.0.1:6013`. Runs indefinitely until the `exit` keyword is received from the server.
+Simple implementation of client-server communication for the client-side interface. When run in the command line, it accepts two arguments, `address` and `port`. When not specified, it will default to `127.0.0.1:6013`. Runs indefinitely until the `exit` keyword is received back from the server.
 
 Example console execute: 
 
@@ -19,7 +19,7 @@ java -jar chatbot-client.jar
 </pre>
 </blockquote>
 
-[^1]: Needs a Java Runtime Environment installed. You may download at the [Java Official Website](https://www.java.com/en/download/).
+**Note:** Needs a Java Runtime Environment installed. You may download from the [Java Official Website](https://www.java.com/en/download/).
 
 ## Definition of Terms
 `address`: The IP address of the server
@@ -27,7 +27,7 @@ java -jar chatbot-client.jar
 `port`: The open port of the server 
 
 ## The Process Rundown
-When the program is first run, a handshake is made to confirm the connection to server in the form of the current time and date. If the server is not running or the address and port is not found, the program will refuse to run and an error message is displayed.
+When the program is first run, a handshake is made to confirm the connection to server in the form of the current time and date. If the server is not running or the address and/or port is not found, the program will refuse to run and an error message is displayed.
 
 The displayed time and date of the handshake is from the server itself and *not* from the client. It will also display the `address` and `port` of the server it is currently connected to. The sent user message will then be echoed back to the user, and will also be displayed with a timestamp (this time it is from the client).
 
