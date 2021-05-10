@@ -20,13 +20,13 @@ java -jar chatbot-client.jar
 </blockquote>
 
 ## Definition of Terms
-address
-: The URI of the server
+`address`: The IP address of the server
+`port`: The open port of the server 
 
 ## The Process Rundown
 When the program is first run, a handshake is made to confirm the connection to server in the form of the current time and date. If the server is not running or the address and port is not found, the program will refuse to connect.
 
-The displayed time and date of the handshake is from the server itself and *not* from the client. It will also display the `address` and `port` of the server it is currently connected to. The sent user message will then be echoed back to the user, and will also be displayed with a timestamp.
+The displayed time and date of the handshake is from the server itself and *not* from the client. It will also display the `address` and `port` of the server it is currently connected to. The sent user message will then be echoed back to the user, and will also be displayed with a timestamp (this time it is from the client).
 
 A successfully connected program output will more or less look like so:
 
