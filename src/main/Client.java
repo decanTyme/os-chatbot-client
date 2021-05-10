@@ -95,7 +95,7 @@ public class Client {
 		String message = consoleReader.readLine();
 
 		/** Check if message is empty **/
-		if (!message.equals("")) {
+		if (!message.isBlank()) {
 		    send.println(message);
 		} else {
 		    stdStream.println("Message cannot be empty!" + "\n");
