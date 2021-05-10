@@ -11,7 +11,8 @@ import java.net.Socket;
  * Simple implementation of client-server communication for the client-side
  * interface. When run in the command line, it accepts two arguments,
  * {@code address} and {@code port}. When not specified, it will default to
- * {@code 127.0.0.1:6013}.
+ * {@code 127.0.0.1:6013}. Runs indefinitely until the {@code exit} keyword is
+ * received from the server.
  * 
  * <p>
  * Example console execute: <blockquote>
@@ -137,7 +138,7 @@ public class Client {
      * @param args (optional) address and port
      */
     public static void main(String[] args) {
-	clearScreen(); 
+	clearScreen();
 
 	int port;
 	String address;
