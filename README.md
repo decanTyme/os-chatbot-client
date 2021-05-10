@@ -57,6 +57,5 @@ The connection and, subsequently, the program will terminate if the user enters 
 - [ ] Finalize all
 
 ### Footnote
-<a name="fn-jarfile">1</a>. You need to compile and export the code as a `jar` file first before you can execute it.
-
-<a name="fn-ml">2</a>. Does not support multi-line messages.
+1. <a name="fn-jarfile"></a> You need to compile and export the code as a `jar` file first before you can execute it. 
+2. <a name="fn-ml"></a> Does not support multi-line messages.
