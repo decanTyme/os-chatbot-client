@@ -27,7 +27,7 @@ java -jar chatbot-client.jar
 `port`: The open port of the server 
 
 ## Description
-This is a simple Java 'client' that runs in the command line that can connect to servers. It can only send and receive messages to and from the server.
+This is a simple Java 'client' that runs in the command line that can connect to Java servers. It can only send and receive messages to and from the server.
 
 ## Process Rundown
 When the program is first run, a handshake is made to confirm the connection to server in the form of the current date and time. If the server is not running or the address and/or port is not found, the program will refuse to run and an error message is displayed.
