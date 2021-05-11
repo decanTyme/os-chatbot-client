@@ -22,9 +22,9 @@ java -jar chatbot-client.jar
 **Note:** Needs a Java Runtime Environment installed. You may download from the [Java Official Website](https://www.java.com/en/download/).
 
 ## Definition of Terms
-`address`: The IP address of the server
+`address`: The IP address of the server (default: 127.0.0.1)
 
-`port`: The open port of the server 
+`port`: The open port of the server (default: 6013)
 
 ## Description
 This is a simple Java 'client' that runs in the command line that can connect to Java servers. It can only send and receive messages to and from the server.
