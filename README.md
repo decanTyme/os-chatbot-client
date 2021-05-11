@@ -1,13 +1,13 @@
 OS Activity 3: Process Implementation, Client-Side Codebase
 =========================
 
-Simple implementation of client-server communication for the client-side interface. When run in the command line,<sup>[1](#fn-jarfile)</sup> it accepts two arguments, `address` and `port`. When not specified, it will default to `127.0.0.1` and `6013` respectively. Runs indefinitely until the `exit` keyword is received back from the server.
+Simple implementation of client-server communication for the client-side interface. When run in the command line,<sup>[1](#fn-jarfile)</sup> it accepts two arguments, `address` and `port`. When not specified, the user will be manually asked on runtime.  the default `address` and `port` is `127.0.0.1` and `6013` respectively. Runs indefinitely until the `exit` keyword is received back from the server.
 
 Example console execute: 
 
 <blockquote>
 <pre>
-java -jar chatbot-client.jar 127.0.0.1 5500
+java -jar chatbot-client.jar --address 127.0.0.1 -p 5500
 </pre>
 </blockquote>
 
