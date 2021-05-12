@@ -11,7 +11,7 @@ import java.net.Socket;
  * Simple implementation of client-server communication for the client-side
  * interface. When run in the command line, it accepts two arguments,
  * {@code address} and {@code port}. When not specified, the program will ask
- * for input while running, otherwise it will default to {@code 127.0.0.1:6013}.
+ * for input on runtime, otherwise it will default to {@code 127.0.0.1:6013}.
  * Runs indefinitely until the {@code exit} keyword is received from the server.
  * 
  * <p>
@@ -33,7 +33,7 @@ import java.net.Socket;
  * <p>
  * 
  * @author Danry Ague
- * @version 2.6.4-alpha
+ * @version 2.6.7-alpha
  */
 public class Client {
 
@@ -64,16 +64,28 @@ public class Client {
     static PrintStream stdStream = System.out;
 
     /**
-     * Clears the command line interface.
+     * Clears the command line interface. Only confirmed working on Windows command
+     * prompts.
      */
     static void clearScreen() {
-	stdStream.print("\033[H\033[2J");
-	stdStream.flush();
+	try {
+	    final String os = System.getProperty("os.name");
+	    if (os.contains("Windows")) {
+		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+	    } else {
+		stdStream.print("\033[H\033[2J");
+		stdStream.flush();
+	    }
+	} catch (final Exception e) {
+	    e.printStackTrace();
+
+	}
     }
 
     /**
      * Uses the {@link java.net.Socket Socket} class in order to connect to the
-     * server.
+     * server. If connected successfully, the client will receive a timestamp
+     * handshake string.
      * 
      * @param uri  the address of the live server.
      * @param port the port number of the live server.
@@ -97,7 +109,9 @@ public class Client {
 	while ((reply = received.readLine()) != null) {
 
 	    /* Initial handshake message from server */
-	    stdStream.println("Current time and date is " + reply + "\n");
+	    stdStream.println("---------------------------------------------------------");
+	    stdStream.println("| " + "Current time and date is " + reply + " |");
+	    stdStream.println("---------------------------------------------------------");
 
 	    while (!reply.equals("exit")) {
 
@@ -118,11 +132,12 @@ public class Client {
 
 		/** Check if user wants to exit **/
 		if (reply.equals("exit")) {
-		    stdStream.println("\n\n" + "Thank you for using AIChatbot! Exiting...");
+		    stdStream.println("\n" + "---------------------------------------------------------");
+		    stdStream.println("Thank you for using! Exiting...");
 		} else {
-
 		    /* Otherwise, relay the server reply to user */
-		    stdStream.println("\n" + "> " + generateTimestamp() + " | Reply from server: " + reply);
+		    stdStream.println("\n" + "> " + generateTimestamp() + " | Reply from server: \n" + reply);
+		    stdStream.println("\n" + "---------------------------------------------------------");
 		}
 
 	    }
@@ -134,8 +149,8 @@ public class Client {
     }
 
     /**
-     * Provides a delay in milliseconds. Useful for making sure that the user sees
-     * an output before it is cleared.
+     * Provides a delay in milliseconds. Used for making sure that the user sees an
+     * output before it is cleared.
      * 
      * @param ms desired delay in milliseconds
      */
@@ -201,7 +216,7 @@ public class Client {
     }
 
     /**
-     * Checks for address validity.
+     * Checks for IP address validity.
      * 
      * @param address the address to be checked
      * @return {@code true} if address is valid
@@ -221,7 +236,7 @@ public class Client {
 
     /**
      * Main entry point of the program. Clears the command line interface first,
-     * then checks if arguments are present before continuing.
+     * then checks if arguments are present before continuing to connect.
      * 
      * @param args (optional) address and port
      */
@@ -258,6 +273,7 @@ public class Client {
 		    break;
 		default:
 		    stdStream.println("Unknown command: " + args[i]);
+		    delay(1000);
 		    i++;
 		}
 	    }
